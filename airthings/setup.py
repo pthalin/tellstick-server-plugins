@@ -15,7 +15,8 @@ setup(
 	description='Airtings Wave Radon sensor plugin',
 	icon='radon.png',
 	long_description="""
-		This plugin reads Radon values from a server (Raspberry Pi 3) that pulls data from a Wave device over Bluetooth. 
+		This plugin reads Radon values from a server 
+                that reads from the Wave device over Bluetooth. 
 	""",
 	packages=['radon'],
 	package_dir = {'':'src'},
