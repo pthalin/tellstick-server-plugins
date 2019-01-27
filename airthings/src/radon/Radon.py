@@ -37,9 +37,13 @@ class Radon(Plugin):
             	Application().registerScheduledTask(self.updateValues, minutes=5, runAtOnce=True)
 
 	def updateValues(self):
-                host_url =  'http://' + self.config('serverAddress')
-                content = urllib2.urlopen(host_url).read()
-                data = content.split(',')
+                host_url = 'http://' + self.config('serverAddress')
+                try:
+                        content = urllib2.urlopen(host_url).read()
+                except Exception as e:
+			logging.error('Could not request Wave value %s', e)
+			return
+		data = content.split(',')
                 #timeStamp  = data[0]
                 temperature = round(float(data[1]),1)
                 humidity    = round(float(data[2]),1)
