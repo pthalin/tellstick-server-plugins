@@ -7,16 +7,16 @@ except ImportError:
 	from distutils.core import setup
 
 setup(
-	name='Airtings Wave Radon sensor',
-	version='1.4',
+	name='Airtings Wave',
+	version='1.0',
 	author='Patrik Thalin',
 	author_email='patrik@thalin.se',
 	color='#2c3e50',
-	description='Airtings Wave Radon sensor plugin',
+	description='Airtings Wave plugin',
 	icon='radon.png',
 	long_description="""
-		This plugin reads Radon values from a server 
-                that reads from the Wave device over Bluetooth. 
+		Reads radon values from a server 
+                that get values over Bluetooth. 
 	""",
 	packages=['radon'],
 	package_dir = {'':'src'},
