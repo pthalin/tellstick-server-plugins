@@ -37,7 +37,6 @@ class Radon(Plugin):
             	Application().registerScheduledTask(self.updateValues, minutes=5, runAtOnce=True)
 
 	def updateValues(self):
-                #values = []
                 host_url =  'http://' + self.config('serverAddress')
                 content = urllib2.urlopen(host_url).read()
                 data = content.split(',')
@@ -55,17 +54,14 @@ class Radon(Plugin):
                         #todo: use  id codecs.encode(device.mac, "hex_codec")
 			self.sensor = RadonSensor(10)
                         self.sensor.setSensorValue(Sensor.WATT, radon24h, Sensor.SCALE_POWER_WATT)
+                        self.sensor.setSensorValue(Sensor.TEMPERATURE, temperature, Sensor.SCALE_TEMPERATURE_CELCIUS)
+                        self.sensor.setSensorValue(Sensor.HUMIDITY, humidity, Sensor.SCALE_HUMIDITY_PERCENT)
 			self.deviceManager.addDevice(self.sensor)
 			self.deviceManager.finishedLoading('radon')
 		else:
                         self.sensor.setSensorValue(Sensor.WATT, radon24h, Sensor.SCALE_POWER_WATT)
+                        self.sensor.setSensorValue(Sensor.TEMPERATURE, temperature, Sensor.SCALE_TEMPERATURE_CELCIUS)
+                        self.sensor.setSensorValue(Sensor.HUMIDITY, humidity, Sensor.SCALE_HUMIDITY_PERCENT)
 
-
-                #values.append({'type': Sensor.TEMPERATURE, 'value': temperature, 'scale': Sensor.SCALE_TEMPERATURE_CELCIUS})
-                #values.append({'type': Sensor.HUMIDITY,    'value': humidity,    'scale': Sensor.SCALE_HUMIDITY_PERCENT})
-                #values.append({'type': Sensor.UNKNOWN,     'value': radon24h,    'scale': Sensor.SCALE_UNKNOWN})
-                #values.append({'type': Sensor.WATT,        'value': radon24h,    'scale': Sensor.SCALE_POWER_WATT})
-                #self.sensor.setSensorValues(values)
-		#self.sensor.setSensorValue(Sensor.UNKNOWN, radon24h, Sensor.SCALE_UNKNOWN)
 
                 
