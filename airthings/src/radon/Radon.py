@@ -25,7 +25,7 @@ class RadonSensor(Sensor):
 		defaultValue='192.168.1.164:8888',
 		title='Server',
 		description='Server Address and Port',
-		minLength=4,
+		minLength=1,
 		maxLength=512
 	)
 )
@@ -40,15 +40,19 @@ class Radon(Plugin):
                 host_url =  'http://' + self.config('serverAddress')
                 content = urllib2.urlopen(host_url).read()
                 data = content.split(',')
-                #timeStamp   = float(data[0])
-                temperature = float(data[1])
-                humidity    = float(data[2])
-                radon24h    = float(data[3])
-                #radonLong   = float(data[4])
-
+                #timeStamp  = data[0]
+                temperature = round(float(data[1]),1)
+                humidity    = round(float(data[2]),1)
+                radon24h    = round(float(data[3]))
+                #radonLong  = float(data[4])
+                macStr      = data[5]
+                #Mask out Vendor part
+                idInt       = 0x000000FFFFFF & int(macStr.translate(None, ":"), 16)
                 logging.info('Radon 24h is %f', radon24h)
                 logging.info('Humidity is %f', humidity)
                 logging.info('Temperature is %f', temperature)
+                logging.info('MAC Adddress is %s', macStr)
+                logging.info('idInt is %d', idInt)
 
 		if self.sensor is None:
                         #todo: use  id codecs.encode(device.mac, "hex_codec")

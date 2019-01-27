@@ -38,10 +38,11 @@ def get_data():
                     str_out += str(datetime(val[0], val[1], val[2], val[3], val[4], val[5])) + ","
                 else:
                     str_out += str(val[0] * s.scale) + ","
-    
-
+                    
+        str_out += addr
     finally:
         p.disconnect()
+
     return str_out 
 
 
