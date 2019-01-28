@@ -7,7 +7,7 @@ except ImportError:
 	from distutils.core import setup
 
 setup(
-	name='Airtings Wave',
+	name='AIRTHINGS',
 	version='1.0',
 	author='Patrik Thalin',
 	author_email='patrik@thalin.se',
