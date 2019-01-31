@@ -38,17 +38,23 @@ def get_data():
                     str_out += str(datetime(val[0], val[1], val[2], val[3], val[4], val[5])) + ","
                 else:
                     str_out += str(val[0] * s.scale) + ","
-                    
+    
         str_out += addr
+    except Exception as e:
+	print("Could not request Wave value. %s" %  e)
+        str_out = ""
+		
     finally:
-        p.disconnect()
-
+        if 'p' in locals():
+            p.disconnect()
+            
     return str_out 
 
 
 def application(environ, start_response):
     start_response('200 OK', [('Content-type', 'text/plain')])
     retval =  get_data()
+    print(retval)
     return retval
 
 make_server('', 8888, application).serve_forever()
