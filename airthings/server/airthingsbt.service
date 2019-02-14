@@ -1,0 +1,11 @@
+[Unit]
+Description=Airtings BT serv
+After=multi-user.target
+ 
+[Service]
+Type=simple
+ExecStart=/usr/bin/python /home/pi/airthingsbt/server.py
+Restart=on-abort
+ 
+[Install]
+WantedBy=multi-user.target
