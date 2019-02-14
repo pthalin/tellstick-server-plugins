@@ -1,0 +1,18 @@
+#!/bin/bash
+mkdir /home/pi/airthingsbt
+cd /home/pi/airthingsbt
+
+sudo apt-get -y install python-pip libglib2.0-dev
+sudo pip install bluepy
+wget https://raw.githubusercontent.com/pthalin/tellstick-server-plugins/master/airthings/server/server.py
+wget https://raw.githubusercontent.com/pthalin/tellstick-server-plugins/master/airthings/server/airthingsbt.service
+sudo cp airthingsbt.service /lib/systemd/system/ 
+sudo chmod 644 /lib/systemd/system/airthingsbt.service
+chmod +x server.py
+sudo systemctl daemon-reload
+sudo systemctl enable airthingsbt.service
+sudo systemctl start airthingsbt.service
+sudo systemctl status airthingsbt.service
+
+hostname -I
+
