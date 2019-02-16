@@ -13,7 +13,7 @@ class RadonSensor(Sensor):
 	def __init__(self, sensorId):
 		super(RadonSensor,self).__init__()
 		self.sensorId = sensorId
-		self.setName('Radon 24h')
+		self.setName('Radon')
 
 	def localId(self):
 		return self.sensorId
@@ -38,7 +38,7 @@ class Radon(Plugin):
 	def __init__(self):
 		self.deviceManager = DeviceManager(self.context)
 		self.sensors = {}
-		#self.deviceManager.removeDevicesByType('radon')
+		self.deviceManager.removeDevicesByType('radon')
             	Application().registerScheduledTask(self.updateValues, minutes=5, runAtOnce=True)
 
 
@@ -70,8 +70,7 @@ class Radon(Plugin):
                                         logging.info('Unknown key: %s', key)
                                         
                         if macStr:
-                                #idNum = int(idx)
-                                idNum       = 0x000000FFFFFF & int(macStr.translate(None, ":"), 16)
+                                idNum = int(macStr.translate(None, ":"), 16)
                                 logging.info('Radon 24h is %f', radon24h)
                                 logging.info('Radon long is %f', radonlong)
                                 logging.info('Humidity is %f', humidity)
@@ -85,7 +84,7 @@ class Radon(Plugin):
                                         logging.info('Added new sendsor %d', idNum)
                 	                self.sensors[idNum] = RadonSensor(idNum)
                                         self.sensors[idNum].setSensorValue(Sensor.WATT, radon24h, Sensor.SCALE_POWER_WATT)
-                                        #self.sensors[idNum].setSensorValue(Sensor.WATT, radonlong, Sensor.SCALE_POWER_VOLT)
+                                        self.sensors[idNum].setSensorValue(Sensor.WATT, radonlong, Sensor.SCALE_POWER_KWH)
                                         self.sensors[idNum].setSensorValue(Sensor.TEMPERATURE, temperature, Sensor.SCALE_TEMPERATURE_CELCIUS)
                                         self.sensors[idNum].setSensorValue(Sensor.HUMIDITY, humidity, Sensor.SCALE_HUMIDITY_PERCENT)
                                         self.deviceManager.addDevice(self.sensors[idNum])
@@ -93,7 +92,7 @@ class Radon(Plugin):
 		                else:
                                         logging.info('Updated sendsor %d', idNum)
                                         self.sensors[idNum].setSensorValue(Sensor.WATT, radon24h, Sensor.SCALE_POWER_WATT)
-                                        #self.sensors[idNum].setSensorValue(Sensor.WATT, radonlong, Sensor.SCALE_POWER_VOLT)
+                                        self.sensors[idNum].setSensorValue(Sensor.WATT, radonlong, Sensor.SCALE_POWER_KWH)
                                         self.sensors[idNum].setSensorValue(Sensor.TEMPERATURE, temperature, Sensor.SCALE_TEMPERATURE_CELCIUS)
                                         self.sensors[idNum].setSensorValue(Sensor.HUMIDITY, humidity, Sensor.SCALE_HUMIDITY_PERCENT)
                         else:
