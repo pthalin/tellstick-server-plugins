@@ -1,9 +1,29 @@
-#!/bin/bash
-mkdir /home/pi/airthingsbt
-cd /home/pi/airthingsbt
+# Server Installation
 
+
+# This is the sever part for a plugin for TellStick ZNet Lite v2
+
+## NOTES ##
+# * Only for Airthings Wave. It will not work with Wave plus, Wave mini or any other product!
+# * Server only tested with Raspberry Pi 3 Model B.
+# * Default port is 8888. If you need to change chnage in server.py
+# * If you place server.py in a diffrent location you will need to edit /lib/systemd/system/airthingsbt.service
+# * The server will automatically find all sensor in range
+# * Make sure to logout from the Airthings Android/iPhone app since this prevent access to the dvice
+
+
+# Install needed packages
 sudo apt-get -y install python-pip libglib2.0-dev
 sudo pip install bluepy
+
+#Enable Bluetooth
+bluetoothctl
+[bluetooth]# power on
+[bluetooth]# quit
+
+# Install server
+mkdir /home/pi/airthingsbt
+cd /home/pi/airthingsbt
 wget https://raw.githubusercontent.com/pthalin/tellstick-server-plugins/master/airthings/server/server.py
 wget https://raw.githubusercontent.com/pthalin/tellstick-server-plugins/master/airthings/server/airthingsbt.service
 sudo cp airthingsbt.service /lib/systemd/system/ 
@@ -12,7 +32,12 @@ chmod +x server.py
 sudo systemctl daemon-reload
 sudo systemctl enable airthingsbt.service
 sudo systemctl start airthingsbt.service
+
+# Check the status with
 sudo systemctl status airthingsbt.service
 
+
+# To get you IP to put it in the plugin configuration.
 hostname -I
+
 
