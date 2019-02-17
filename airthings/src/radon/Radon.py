@@ -38,7 +38,7 @@ class Radon(Plugin):
 	def __init__(self):
 		self.deviceManager = DeviceManager(self.context)
 		self.sensors = {}
-		self.deviceManager.removeDevicesByType('radon')
+		#self.deviceManager.removeDevicesByType('radon')
             	Application().registerScheduledTask(self.updateValues, minutes=5, runAtOnce=True)
 
 
